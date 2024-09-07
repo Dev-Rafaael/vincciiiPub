@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState,useContext } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import Breadcrumbs from '../components/Breadcrumbs'; // Importe o componente Breadcrumbs
 import classes from './Identificação.module.css';
-
+import { AccountContext } from '../contexts/AccountContext';
 // Defina ou importe a lista de itens (menuItems)
 const menuItems = [
   { id: 1, title: "Drinks sem álcool", description: "Bartenders para festas em São Paulo", info: "Bartender para festa Open Bar em São Paulo com 12 opções de Drinks com e sem álcool. Opção ideal para servir crianças e adultos.", price: "A partir de R$550,00" },
@@ -16,13 +16,21 @@ const formatTitleForURL = (title) => {
 };
 
 const Identificação = () => {
+  const [cpf, SetCPF]=useState("")
+  const [nomeCompleto, SetNomeCompleto]=useState("")
+  const [email, SetEmail]=useState("")
+  const [senha, SetSenha]=useState("")
+  const [sexo, SetSexo]=useState("")
+  const [telefone, SetTelefone]=useState("")
+  const [dataNascimento, SetDataNascimento]=useState("")
+  const { addToAccount } = useContext(AccountContext);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
   const { title } = useParams();
   
   const location = useLocation();
   const formattedTitle = formatTitleForURL(location.state?.item?.title || '');
-  const { item, horario, convidados, bartenders } = location.state || {};
+  const { item, horario, convidados, bartenders,valorTotalFormatado } = location.state || {};
 
   if (!item) {
     return <div>Nenhum item foi selecionado.</div>;
@@ -30,20 +38,34 @@ const Identificação = () => {
   console.log(horario);
   
   const breadcrumbs = [
-    { label: 'Orçamento', url: '/Orçamento' },
-    { label: item.title, url: `/Serviço/${formatTitleForURL(item.title)}` },
-    { label: 'Identificação', url: '#' }
+    { label: item.title, url: `/Orçamento/${formatTitleForURL(item.title)}` },
+    { label: 'Identificação', url: '/Identificação/'},
+    { label: 'Checkout', url: '#' }
+
   ];
   const handleContratarClick = () => {
     if (!horario || !convidados || !bartenders) {
       alert('Por favor, selecione todas as opções antes de continuar.');
       return;
     }
-    navigate('/Pagamento/', { state: { 
+
+    const itemParaConta = {
+      cpf,
+      nomeCompleto,
+      email,
+      sexo,
+      telefone,
+      dataNascimento,
+    };
+    addToAccount(itemParaConta);
+
+    navigate('/Checkout/', { 
+      state: { 
       item,
       horario,
       convidados,
-      bartenders 
+      bartenders,
+      valorTotalFormatado
     }  });
     
   };
@@ -61,26 +83,30 @@ const Identificação = () => {
             <div className={classes.ContentIdentificacao}>
               <form action="#" className={classes.formIdentificacao}>
                 <label htmlFor="cpf">CPF</label>
-                <input type="text" name="cpf" id="cpf" placeholder='Digite Seu CPF' required />
+                <input type="text" name="cpf" id="cpf" placeholder='Digite Seu CPF' value={cpf}  onChange={(e) => SetCPF(e.target.value)}required />
                 
                 <label htmlFor="nome">Nome Completo</label>
-                <input type="text" name="nome" id="nome" placeholder='Digite Seu Nome Completo' required />
+                <input type="text" name="nome" id="nome" placeholder='Digite Seu Nome Completo' value={nomeCompleto} onChange={(e) => SetNomeCompleto(e.target.value)} required />
                 
                 <label htmlFor="email">E-Mail</label>
-                <input type="email" name="email" id="email" placeholder='Digite Seu E-Mail' required />
+                <input type="email" name="email" id="email" placeholder='Digite Seu E-Mail'  value={email} onChange={(e) => SetEmail(e.target.value)} required />
+                
+                                
+                <label htmlFor="senha">Senha</label>
+                <input type="password" name="senha" id="senha" placeholder='Digite uma senha'  value={senha} onChange={(e) => SetSenha(e.target.value)} required />
                 
                 <label htmlFor="sexo">Sexo</label>
-                <select name="sexo" id="sexo" required>
+                <select name="sexo" id="sexo"  value={sexo}  onChange={(e) => SetSexo(e.target.value)} required>
                   <option value="" disabled selected>Selecione uma Opção</option>
                   <option value="masculino">Masculino</option>
                   <option value="feminino">Feminino</option>
                 </select>
                 
                 <label htmlFor="telefone">DDD + Celular</label>
-                <input type="text" name="telefone" id="telefone" placeholder='(11) 91092-8922' required />
+                <input type="text" name="telefone" id="telefone"  placeholder='(11) 91092-8922' value={telefone} onChange={(e) => SetTelefone(e.target.value)} required />
                 
                 <label htmlFor="data">Data de Nascimento</label>
-                <input type="date" name="data" id="data" required />
+                <input type="date" name="data" id="data"  value={dataNascimento} onChange={(e) => SetDataNascimento(e.target.value)} required />
               </form>
             </div>
             <div className={classes.InfoCadastro}>
@@ -90,14 +116,14 @@ const Identificação = () => {
             <button onClick={handleContratarClick}>CONTRATAR</button>
             </div>
           </div>
-          <div className={classes.InfoPacote}>
+        <section className={classes.InfoPacote}>
           <div className={classes.imgPacote}>
             <img src={item.img} alt="img" />
           </div> 
             <h4>{item.title}</h4> 
             <p>{item.description}</p>
             <div className={classes.itemPrice}>
-              <p>{item.price}</p>
+              <p>R$ {valorTotalFormatado}</p>
             </div>
             <div className={classes.infoAdicionais}>
             <h2>Informações adicionais:</h2>
@@ -114,7 +140,7 @@ const Identificação = () => {
             <p>{convidados} Convidados</p>
             </div>
           </div>
-          </div>    
+          </section>    
         </div>
       </div>
     </>

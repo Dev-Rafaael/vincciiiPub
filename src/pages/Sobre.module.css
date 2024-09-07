@@ -27,7 +27,10 @@ span{
 }
 
 .sobre{
-  background-color:#4c4c4b;
+  background: linear-gradient(rgba(17, 17, 17, 0.655),rgba(20,20,20,1)),url(../assets/drink6.jpg);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 .contentSobre{
   display: flex;

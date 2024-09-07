@@ -1,9 +1,24 @@
+
+import React, { useState,useEffect } from 'react';
+
 import classes from './Sobre.module.css'
 
-// import fachada from'../assets/INFINITY.png'
 import drink from '../assets/drink11.jpg'
 import drink1 from '../assets/drink10.jpg'
+import drink2 from '../assets/drink3.jpeg'
+import drink3 from '../assets/drink9.jpg'
+import 'aos/dist/aos.css';
+import AOS from 'aos';
+
+
 function Sobre() {
+  
+  useEffect(() => {
+  AOS.init({
+    duration: 1000, 
+    easing: 'ease-in-out', 
+  });
+}, []);
   return (
     <> 
     <div className={classes.navSobre}>
@@ -13,8 +28,8 @@ function Sobre() {
     </div>
       <div className={classes.sobre}>
     <div className={classes.contentSobre}>
-     <img src={drink1} /> 
-      <div className={classes.SobreInfo}>    
+     <img src={drink1} data-aos="fade-up" data-aos-delay="300"/> 
+      <div className={classes.SobreInfo} data-aos="fade-up" data-aos-delay="200">    
       <h3>TOP 10 MELHORES PUBS DO <span> BRASIL </span></h3>
       <p>
       A rede Vincci Pub, fundada em 2023, 
@@ -23,7 +38,7 @@ function Sobre() {
    </div> 
    </div> 
     <div className={classes.contentSobre}>
-    <div className={classes.SobreInfo}>
+    <div className={classes.SobreInfo} data-aos="fade-up" data-aos-delay="100">
       <h3 ><span>VIVA O AGORA</span></h3>
       <p>
 Nós, da Vincci Pub, abraçamos a filosofia da transformação contínua. Essa crença é o alicerce do nosso negócio. Quando um cliente entra em uma de nossas unidades com o objetivo de se divertir,
@@ -35,7 +50,7 @@ Ao longo dos últimos 20 anos, temos dedicado nossos esforços para cultivar
  jornada da transformação. </p>
 
  </div>
-   <img src={drink} />
+   <img src={drink3} data-aos="fade-down" data-aos-delay="300"/>
     </div>
     <div className={classes.numeros}>
 

@@ -53,7 +53,7 @@ a{
   background-position: center;
   background-size: cover;
   display: flex;
-  height: 40rem;
+  height: 100%;
  padding-top: 4rem;
 }
 .formText{

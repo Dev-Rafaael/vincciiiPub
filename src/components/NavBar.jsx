@@ -15,7 +15,7 @@ function Navbar() {
         <ul>
           <Link to={"#"}><i class="bi bi-search"></i></Link>
           <li><Link>HOME</Link></li>
-          <li><Link to={"/Orçamento/"}>ORÇAMENTO</Link></li>
+          <li><Link to={"/Pacotes/"}>PACOTES</Link></li>
              <Link to={"#"}><img src={logo} className={classes.logoImg}/></Link>
               <li><Link to={"/sobre/"}>SOBRE NÓS</Link></li>   
       
@@ -23,8 +23,8 @@ function Navbar() {
          </ul>
          </div> 
           <div className={classes.servicos}>
-          <Link to={"/Checkout/"}><i class="bi bi-person"></i></Link>
-          <Link to={"/Checkout/"}><i class="bi bi-cart"></i></Link>    
+          <Link to={"/Minha Conta/"}><i class="bi bi-person"></i></Link>
+          <Link to={"/Carrinho/"}><i class="bi bi-cart"></i></Link>    
           </div>
       </nav>
   </div>
