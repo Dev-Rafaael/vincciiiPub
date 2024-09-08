@@ -9,6 +9,7 @@ import classes from './Orçamento.module.css';
 import Breadcrumbs from '../components/Breadcrumbs';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import imageMap from '../utils/imageMap'; // Ajuste o caminho conforme necessário
 
 const menuItems = [
   { id: 1, img: drink10, title: "Drinks sem álcool", description: "Bartenders para festas, São Paulo", info: "Bartender para festa Open Bar em São Paulo com 12 opções de Drinks com e sem álcool.", price: "A partir de R$550,00" },
@@ -38,9 +39,9 @@ const Orçamento = () => {
   const item = location.state?.item || menuItems.find(item => formatTitleForURL(item.title) === formattedTitle);
 
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [mainImage, setMainImage] = useState(item?.img || '');
-  const thumbnails = [drink10, drink8, drink9, drink8, drink9, drink11];
-  
+  const [mainImage, setMainImage] = useState(imageMap[item.img] || '');
+  const thumbnails = Object.values(imageMap); // Usa todos os valores do mapeamento como miniaturas
+ 
   if (!item) {
     return <div>Item não encontrado</div>;
   }

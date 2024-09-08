@@ -13,7 +13,7 @@ function Navbar() {
     </div>
         <div className={classes.navItens} >
         <ul>
-          <Link to={"#"}><i class="bi bi-search"></i></Link>
+          <Link to={"Search/"}><i class="bi bi-search"></i></Link>
           <li><Link>HOME</Link></li>
           <li><Link to={"/Pacotes/"}>PACOTES</Link></li>
              <Link to={"#"}><img src={logo} className={classes.logoImg}/></Link>

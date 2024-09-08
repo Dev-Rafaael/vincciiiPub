@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { CartContext } from '../contexts/CartContext';
 import classes from './Carrinho.module.css'
 import { Link } from 'react-router-dom';
+import imageMap from '../utils/imageMap'; // Ajuste o caminho conforme necessári
 function Carrinho() {
   const { cartItems } = useContext(CartContext);
 
@@ -33,7 +34,7 @@ function Carrinho() {
                 <p className={classes.quantidadeItens}>ITEM {index + 1} </p>
             <div className={classes.itemContent}>
               <figure className={classes.imgItem}>
-                <img src={item.item.img} alt={`Imagem do item ${item.item.title}`} />
+                <img src={imageMap[item.item.img]} alt={`Imagem do item ${item.item.title}`} />
               </figure>
 
               <section className={classes.infoSection}>

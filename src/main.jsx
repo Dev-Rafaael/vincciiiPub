@@ -28,6 +28,7 @@ import 'swiper/css/scrollbar';
 import { CartProvider } from './contexts/CartContext.jsx';
 import { AccountProvider } from './contexts/AccountContext.jsx';
 import LayoutZap from './components/LayoutZap.jsx'
+import PesquisaPacotes from './pages/Search.jsx'
 
 
 
@@ -77,6 +78,10 @@ const router=createBrowserRouter([
         {
           path:"Minha Conta/",
           element:<Account/>
+        },
+         {
+          path:"Search/",
+          element:<PesquisaPacotes/>
         }
     ]
   }

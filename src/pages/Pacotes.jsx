@@ -1,25 +1,35 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import classes from './Pacotes.module.css';
 import { Link } from 'react-router-dom';
-import drink8 from '../assets/drink8.jpg';
-import drink9 from '../assets/drink9.jpg';
-import drink10 from '../assets/drink10.jpg';
-import drink11 from '../assets/drink11.jpg';
 import Breadcrumbs from '../components/Breadcrumbs';
 
-const menuItems = [
-  { id: 1, img: drink10, title: "Drinks sem álcool", description: "Bartenders para festas, São Paulo", info: "Bartender para festa Open Bar em São Paulo com 12 opções de Drinks com e sem álcool.", price: "A partir de R$550,00" },
-  { id: 2, img: drink11, title: "Barman + lista de compras", description: "Bartenders para festas, São Paulo", info: "Economize, pague apenas pela mão de obra de Barman para festa e receba uma lista sugestiva de compras.", price: "A partir de R$1.689,99" },
-  { id: 3, img: drink8, title: "Drinks com e sem álcool", description: "Bartenders para festas, São Paulo", info: "6 opções de Drinks Clássicos + Festival de Caipirinhas com 3 frutas e 3 opções de destilados.", price: "A partir de R$1.889,99" },
-  { id: 4, img: drink9, title: "Pacote de Drinks Clássicos", description: "Bartenders para festas, São Paulo", info: "6 opções de Drinks Clássicos + Festival de Caipirinhas com 3 frutas e 3 opções de destilados.", price: "A partir de R$550,00" },
-];
-
-const formatTitleForURL = (title) => {
-  return title.toLowerCase().replace(/\s+/g, '-');
-};
+import imageMap from '../utils/imageMap'; // Ajuste o caminho conforme necessário
 
 function Pacotes() {
+  const [menuItems, setMenuItems] = useState([]);
 
+  
+  // Função para buscar pacotes do backend
+  useEffect(() => {
+    const fetchPacotes = async () => {
+      try {
+        const response = await fetch('http://localhost/ECOMMERCE-PUB/my-ecommerce-backend/api/getPacotes.php'); // URL do seu arquivo PHP
+        const data = await response.json();
+        setMenuItems(data);
+      } catch (error) {
+        console.error('Erro ao buscar pacotes:', error);
+      }
+    };
+
+    fetchPacotes();
+  }, []);
+
+  const formatTitleForURL = (title) => {
+    return title.toLowerCase().replace(/\s+/g, '-');
+  };
+
+  console.log(menuItems);
+  
   return (
     <>
       <div className={classes.navPacotes}>
@@ -30,7 +40,7 @@ function Pacotes() {
         <div className={classes.sectionContainer}>
           {menuItems.map(item => (
             <div className={classes.orcamentoType} key={item.id}>
-              <img src={item.img} alt={item.title} />
+              <img src={imageMap[item.img]} alt={item.title} />
               <h2>{item.title}</h2>
               <p>{item.description}</p>
               <div className={classes.orcamentoPreco}>
@@ -42,7 +52,6 @@ function Pacotes() {
               >
                 SAIBA MAIS
               </Link>
-
             </div>
           ))}
         </div>
@@ -52,4 +61,5 @@ function Pacotes() {
 }
 
 export default Pacotes;
+
 
